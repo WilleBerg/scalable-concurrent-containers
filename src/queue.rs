@@ -500,6 +500,7 @@ impl<T> Default for Queue<T> {
 impl<T> Drop for Queue<T> {
     #[inline]
     fn drop(&mut self) {
+        println!("Starting drop function in SCCQueue");
         if !self.oldest.is_null(Relaxed) {
             let guard = Guard::new();
             let mut iter = self.iter(&guard);
@@ -508,6 +509,7 @@ impl<T> Drop for Queue<T> {
                 iter.next();
             }
         }
+        println!("Done dropping");
     }
 }
 
