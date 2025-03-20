@@ -501,6 +501,7 @@ impl<T> Drop for Queue<T> {
     #[inline]
     fn drop(&mut self) {
         println!("Starting drop function in SCCQueue");
+        println!("Currently {} nodes in queue", self.len());
         if !self.oldest.is_null(Relaxed) {
             let guard = Guard::new();
             let mut iter = self.iter(&guard);
