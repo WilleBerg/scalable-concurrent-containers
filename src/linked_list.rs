@@ -457,12 +457,14 @@ impl<T> DerefMut for Entry<T> {
 impl<T> Drop for Entry<T> {
     #[inline]
     fn drop(&mut self) {
+        println!("starting drop for entry");
         if !self.next.is_null(Relaxed) {
             let guard = Guard::new();
             if let Some(next_entry) = self.next.load(Relaxed, &guard).as_ref() {
                 next_ptr_recursive(next_entry, Relaxed, 64, &guard);
             }
         }
+        println!("Done with drop for entry");
     }
 }
 
